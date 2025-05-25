@@ -7,10 +7,6 @@
 A responsive and interactive web application for predicting diabetes based on medical input features using a trained Machine Learning model (SVM). Built with Flask, HTML, CSS, JavaScript, and deployed for free.
 
 
-
-🔗 **[Try the website Here](https://ml-diabetes-1-9gtd.onrender.com)**  
-*(Deployed using Render – free hosting platform)*
-
 ---
 
 ## 💡 Features
