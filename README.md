@@ -1,6 +1,3 @@
-Here’s a complete and professional `README.md` for your **Diabetes Prediction Web App using Machine Learning (SVM)**. This README is well-structured, visually clean, and ready to impress anyone visiting your GitHub repository.
-
----
 
 ### 📄 `README.md`
 
@@ -36,8 +33,8 @@ This app takes the following **8 medical inputs**:
 
 1. Pregnancies  
 2. Glucose  
-3. BloodPressure  
-4. SkinThickness  
+3. Blood Pressure  
+4. Skin Thickness  
 5. Insulin  
 6. BMI  
 7. DiabetesPedigreeFunction  
@@ -67,7 +64,7 @@ ML\_Diabetes\_Predictor/
 1. Clone the repository:
    ```bash
    git clone https://github.com/Preethamkumarkothakonda/ML_Diabetes.git
-   cd ML_Diabetes_Predictor
+   cd ML_Diabetes
 ````
 
 2. Install dependencies:
@@ -124,14 +121,3 @@ This project is licensed under the [MIT License](LICENSE).
 
 ````
 
----
-
-✅ Just copy and paste this into your `README.md` file in your project root, commit it, and push it to GitHub:
-
-```bash
-git add README.md
-git commit -m "Add complete README for diabetes predictor"
-git push
-````
-
-Let me know if you also want a custom logo or screenshot banner for the top!
