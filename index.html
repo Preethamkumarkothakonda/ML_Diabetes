@@ -4,38 +4,43 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Diabetes Prediction</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
   <style>
-    /* Google Fonts */
-    @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap');
-
-    /* Reset */
     * {
-      box-sizing: border-box;
       margin: 0;
       padding: 0;
-      font-family: 'Roboto', sans-serif;
+      box-sizing: border-box;
+      font-family: 'Poppins', sans-serif;
     }
 
     body {
-      background: linear-gradient(135deg, #2D89FF 0%, #71B7FF 100%);
+      transition: background 0.5s ease, color 0.5s ease;
+      background: linear-gradient(135deg, #dfefff, #ffffff);
       min-height: 100vh;
       display: flex;
       justify-content: center;
       align-items: center;
       padding: 20px;
-      color: #222;
-      overflow-x: hidden;
+    }
+
+    body.dark {
+      background: #121212;
+      color: #e0e0e0;
     }
 
     .container {
-      background: #fff;
+      background: white;
       border-radius: 16px;
-      max-width: 480px;
+      max-width: 500px;
       width: 100%;
       padding: 40px 30px;
-      box-shadow: 0 12px 25px rgba(45, 137, 255, 0.35);
+      box-shadow: 0 12px 25px rgba(0, 0, 0, 0.1);
       position: relative;
-      overflow: hidden;
+      transition: background 0.5s ease, color 0.5s ease;
+    }
+
+    body.dark .container {
+      background: #1e1e1e;
     }
 
     h1 {
@@ -43,165 +48,190 @@
       color: #2D89FF;
       margin-bottom: 30px;
       font-weight: 700;
-      letter-spacing: 1.2px;
       text-transform: uppercase;
-      animation: fadeInDown 0.8s ease forwards;
     }
 
     form label {
       display: block;
-      margin-bottom: 10px;
+      margin-bottom: 8px;
       font-weight: 600;
       color: #2D89FF;
-      animation: fadeInUp 0.8s ease forwards;
     }
 
-    form label:nth-child(odd) {
-      animation-delay: 0.3s;
-    }
-    form label:nth-child(even) {
-      animation-delay: 0.5s;
+    body.dark form label {
+      color: #6cb2ff;
     }
 
     input[type="number"] {
       width: 100%;
-      padding: 12px 15px;
+      padding: 12px;
       border-radius: 8px;
       border: 2px solid #ccc;
       font-size: 16px;
-      margin-bottom: 25px;
+      margin-bottom: 20px;
       transition: border-color 0.3s ease, box-shadow 0.3s ease;
       outline: none;
-      animation: fadeInUp 0.8s ease forwards;
     }
 
     input[type="number"]:focus {
       border-color: #2D89FF;
-      box-shadow: 0 0 8px #2D89FFaa;
-      animation: none;
+      box-shadow: 0 0 6px #2D89FFaa;
     }
 
     button {
       width: 100%;
-      padding: 15px;
+      padding: 14px;
       background: #2D89FF;
       border: none;
-      border-radius: 12px;
+      border-radius: 10px;
       color: white;
       font-size: 18px;
-      font-weight: 700;
+      font-weight: 600;
       cursor: pointer;
-      letter-spacing: 1.5px;
       transition: background 0.3s ease, transform 0.2s ease;
-      box-shadow: 0 6px 15px rgba(45, 137, 255, 0.5);
+      margin-top: 10px;
     }
 
     button:hover {
       background: #1A5FD1;
-      transform: translateY(-3px);
-      box-shadow: 0 10px 20px rgba(26, 95, 209, 0.7);
-    }
-
-    button:active {
-      transform: translateY(0);
-      box-shadow: 0 6px 15px rgba(45, 137, 255, 0.5);
+      transform: translateY(-2px);
     }
 
     #result {
-      margin-top: 30px;
-      font-size: 22px;
-      font-weight: 700;
+      margin-top: 25px;
+      font-size: 20px;
+      font-weight: 600;
       text-align: center;
-      min-height: 28px;
-      color: #333;
-      opacity: 0;
-      transition: opacity 0.6s ease;
+      min-height: 24px;
+      transition: opacity 0.5s ease;
     }
 
     #result.show {
       opacity: 1;
     }
 
-    /* Animations */
-    @keyframes fadeInDown {
-      0% {
-        opacity: 0;
-        transform: translateY(-20px);
-      }
-      100% {
-        opacity: 1;
-        transform: translateY(0);
-      }
+    #downloadBtn {
+      display: none;
+      margin-top: 15px;
+      padding: 10px;
+      font-size: 16px;
+      background: #28a745;
+      border: none;
+      border-radius: 8px;
+      color: white;
+      cursor: pointer;
     }
 
-    @keyframes fadeInUp {
-      0% {
-        opacity: 0;
-        transform: translateY(20px);
-      }
-      100% {
-        opacity: 1;
-        transform: translateY(0);
-      }
+    #downloadBtn:hover {
+      background: #218838;
+    }
+
+    #modeToggleButtons {
+      position: fixed;
+      top: 16px;
+      right: 16px;
+      z-index: 999;
+      display: flex;
+      gap: 10px;
+    }
+
+    #modeToggleButtons button {
+      padding: 10px 16px;
+      border-radius: 25px;
+      border: none;
+      font-weight: 600;
+      cursor: pointer;
+      background: #0066ff;
+      color: white;
+      box-shadow: 0 4px 10px rgba(0, 102, 255, 0.3);
+      transition: background 0.3s ease;
+    }
+
+    #modeToggleButtons button:hover {
+      background: #004fcc;
     }
   </style>
 </head>
 <body>
+
+  <div id="modeToggleButtons">
+    <button id="darkModeBtn" aria-label="Switch to Dark Mode">🌙 Dark Mode</button>
+    <button id="lightModeBtn" aria-label="Switch to Light Mode" style="display: none;">☀️ Light Mode</button>
+  </div>
 
   <div class="container">
     <h1>Diabetes Prediction</h1>
 
     <form id="predictForm" autocomplete="off">
       <label for="pregnancies">Pregnancies:</label>
-      <input type="number" id="pregnancies" min="0" required />
+      <input type="number" id="pregnancies" step="0.01" min="0" required />
 
       <label for="glucose">Glucose:</label>
-      <input type="number" id="glucose" min="0" required />
+      <input type="number" id="glucose" step="0.01" min="0" required />
 
       <label for="bloodPressure">Blood Pressure:</label>
-      <input type="number" id="bloodPressure" min="0" required />
+      <input type="number" id="bloodPressure" step="0.01" min="0" required />
 
       <label for="skinThickness">Skin Thickness:</label>
-      <input type="number" id="skinThickness" min="0" required />
+      <input type="number" id="skinThickness" step="0.01" min="0" required />
 
       <label for="insulin">Insulin:</label>
-      <input type="number" id="insulin" min="0" required />
+      <input type="number" id="insulin" step="0.01" min="0" required />
 
       <label for="bmi">BMI:</label>
-      <input type="number" id="bmi" step="0.1" min="0" required />
+      <input type="number" id="bmi" step="0.01" min="0" required />
 
       <label for="dpf">Diabetes Pedigree Function:</label>
       <input type="number" id="dpf" step="0.001" min="0" required />
 
       <label for="age">Age:</label>
-      <input type="number" id="age" min="0" required />
+      <input type="number" id="age" step="0.01" min="0" required />
 
       <button type="submit">Predict</button>
     </form>
 
     <div id="result"></div>
+    <button id="downloadBtn">📄 Download Result Summary</button>
   </div>
 
   <script>
     const form = document.getElementById('predictForm');
     const resultDiv = document.getElementById('result');
+    const downloadBtn = document.getElementById('downloadBtn');
+
+    const darkBtn = document.getElementById('darkModeBtn');
+    const lightBtn = document.getElementById('lightModeBtn');
+    const body = document.body;
+
+    darkBtn.addEventListener('click', () => {
+      body.classList.add('dark');
+      darkBtn.style.display = 'none';
+      lightBtn.style.display = 'inline-block';
+    });
+
+    lightBtn.addEventListener('click', () => {
+      body.classList.remove('dark');
+      lightBtn.style.display = 'none';
+      darkBtn.style.display = 'inline-block';
+    });
 
     form.addEventListener('submit', async (e) => {
       e.preventDefault();
 
       resultDiv.classList.remove('show');
-      resultDiv.style.color = '#333';
-      resultDiv.textContent = "Predicting...";
+      resultDiv.textContent = "🔄 Predicting...";
+      resultDiv.style.color = body.classList.contains('dark') ? '#ccc' : '#222';
+      downloadBtn.style.display = 'none';
 
       const data = {
-        pregnancies: Number(document.getElementById('pregnancies').value),
-        glucose: Number(document.getElementById('glucose').value),
-        bloodPressure: Number(document.getElementById('bloodPressure').value),
-        skinThickness: Number(document.getElementById('skinThickness').value),
-        insulin: Number(document.getElementById('insulin').value),
-        bmi: Number(document.getElementById('bmi').value),
-        dpf: Number(document.getElementById('dpf').value),
-        age: Number(document.getElementById('age').value),
+        pregnancies: parseFloat(document.getElementById('pregnancies').value),
+        glucose: parseFloat(document.getElementById('glucose').value),
+        bloodPressure: parseFloat(document.getElementById('bloodPressure').value),
+        skinThickness: parseFloat(document.getElementById('skinThickness').value),
+        insulin: parseFloat(document.getElementById('insulin').value),
+        bmi: parseFloat(document.getElementById('bmi').value),
+        dpf: parseFloat(document.getElementById('dpf').value),
+        age: parseFloat(document.getElementById('age').value),
       };
 
       try {
@@ -214,14 +244,28 @@
         if (!response.ok) throw new Error('Server error');
 
         const json = await response.json();
+        let resultText = '';
 
         if (json.prediction === 1) {
-          resultDiv.textContent = "🚨 Prediction: Positive";
+          resultText = "🚨 Prediction: Positive";
           resultDiv.style.color = '#e74c3c';
         } else {
-          resultDiv.textContent = "✅ Prediction: Negative";
+          resultText = "✅ Prediction: Negative";
           resultDiv.style.color = '#27ae60';
         }
+
+        resultDiv.textContent = resultText;
+        downloadBtn.style.display = 'inline-block';
+        downloadBtn.onclick = () => {
+          const blob = new Blob([resultText], { type: 'text/plain' });
+          const url = URL.createObjectURL(blob);
+          const a = document.createElement('a');
+          a.href = url;
+          a.download = 'prediction_result.txt';
+          document.body.appendChild(a);
+          a.click();
+          document.body.removeChild(a);
+        };
 
       } catch (error) {
         resultDiv.textContent = "⚠️ Error: " + error.message;
